@@ -29,8 +29,8 @@ import urllib.error
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 # Override with --chunks-dir and --output-dir flags
-DEFAULT_CHUNKS_DIR = os.path.expanduser("~/sms-pipeline/chunks")
-DEFAULT_OUTPUT_DIR = os.path.expanduser("~/sms-pipeline/extracted")
+DEFAULT_CHUNKS_DIR = os.path.join(os.path.dirname(__file__), "chunks")
+DEFAULT_OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "extracted")
 API_URL = os.environ.get("OLLAMA_API_URL", "https://ollama.com/v1/chat/completions")
 DEFAULT_MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:31b")
 

@@ -29,10 +29,10 @@ import requests
 # ── Configuration ──────────────────────────────────────────────────────────────
 HINDSIGHT_HOST = os.environ.get("HINDSIGHT_HOST", "localhost")
 HINDSIGHT_PORT = os.environ.get("HINDSIGHT_PORT", "9077")
-HINDSIGHT_BANK = os.environ.get("HINDSIGHT_BANK", "hermes")
+HINDSIGHT_BANK = os.environ.get("HINDSIGHT_BANK", "default")
 HINDSIGHT_URL = f"http://{HINDSIGHT_HOST}:{HINDSIGHT_PORT}"
 API_ENDPOINT = f"{HINDSIGHT_URL}/v1/default/banks/{HINDSIGHT_BANK}/memories"
-DEFAULT_INPUT = os.path.expanduser("~/sms-pipeline/filtered_facts.json")
+DEFAULT_INPUT = os.path.join(os.path.dirname(__file__), "filtered_facts.json")
 
 # Map Phase 3 categories to Hindsight-friendly tags
 CATEGORY_TAGS = {

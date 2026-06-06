@@ -30,17 +30,17 @@ from collections import defaultdict
 
 
 # ── Configuration ──────────────────────────────────────────────────────────────
-DEFAULT_EXTRACTED_DIR = os.path.expanduser("~/sms-pipeline/extracted")
-DEFAULT_CONTACTS_PATH = os.path.expanduser("~/sms-pipeline/contacts_filter.json")
-DEFAULT_OUTPUT_PATH = os.path.expanduser("~/sms-pipeline/filtered_facts.json")
-DEFAULT_REPORT_PATH = os.path.expanduser("~/sms-pipeline/filter_report.json")
+DEFAULT_EXTRACTED_DIR = os.path.join(os.path.dirname(__file__), "extracted")
+DEFAULT_CONTACTS_PATH = os.path.join(os.path.dirname(__file__), "contacts_filter.json")
+DEFAULT_OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "filtered_facts.json")
+DEFAULT_REPORT_PATH = os.path.join(os.path.dirname(__file__), "filter_report.json")
 
 # Names that refer to the user — customize these for your own setup
 # These will all be normalized to the first entry
-SELF_NAMES = set()  # e.g., {"william", "will", "bill", "billy"}
+SELF_NAMES = set()  # e.g., {"jonathan", "jon", "johnny"}
 # Names that refer to the user's partner
-PARTNER_NAMES = set()  # e.g., {"evan", "eeoneal"}
-PARTNER_CANONICAL = ""  # e.g., "Evan O'Neal"
+PARTNER_NAMES = set()  # e.g., {"sam", "samp"}
+PARTNER_CANONICAL = ""  # e.g., "Sam Parker"
 
 # Minimum salience and confidence thresholds
 DEFAULT_SALIENCE = 3

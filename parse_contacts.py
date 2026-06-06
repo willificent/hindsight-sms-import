@@ -171,8 +171,8 @@ def main():
     filter_data = build_contacts_filter(contacts)
     print(f"  {len(filter_data)} unique phone numbers in filter")
     
-    # Save the filter
-    output_path = Path(__file__).parent / 'contacts_filter.json'
+    # Save the filter (next to the script by default)
+    output_path = Path(args.output) if args.output else Path(__file__).parent / 'contacts_filter.json'
     with open(output_path, 'w') as f:
         json.dump(filter_data, f, indent=2, ensure_ascii=False)
     

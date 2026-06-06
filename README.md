@@ -55,7 +55,7 @@ Reads the [SMS Backup & Restore](https://play.google.com/store/apps/details?id=c
 
 ```bash
 python3 phase1_chunk.py \
-  --input sms-20260529135708.xml \
+  --input sms-backup.xml \
   --output chunks/ \
   --contacts contacts_filter.json \
   --min-messages 20
@@ -184,7 +184,7 @@ python3 phase4_ingest.py --batch-size 5 --delay 2.0
 **Environment variables:**
 - `HINDSIGHT_HOST` — Default: `localhost`
 - `HINDSIGHT_PORT` — Default: `9077`
-- `HINDSIGHT_BANK` — Default: `hermes`
+- `HINDSIGHT_BANK` — Default: `default`
 
 **Each fact becomes a Hindsight memory item with:**
 - `content`: the factual claim
@@ -200,7 +200,7 @@ python3 phase4_ingest.py --batch-size 5 --delay 2.0
 ## Installation
 
 ```bash
-git clone https://github.com/williamsoutherland/hindsight-sms-import.git
+git clone https://github.com/willificent/hindsight-sms-import.git
 cd hindsight-sms-import
 pip install requests  # Only dependency beyond stdlib
 ```
@@ -236,13 +236,13 @@ Each phase writes intermediate files. This means:
 
 The current normalization handles:
 - First name → full name (Ben → Benjamin Smith)
+- Self-reference variants (jon → Jonathan)
 - First name + last initial (Ben S. → Benjamin Smith)
-- Self-reference variants (will → William)
-- Possessive forms (William's → William)
+- Possessive forms (Jonathan's → Jonathan)
 
 Known gaps:
 - Spelling variants (Reagan vs Regan) require manual alias mapping
-- Possessive constructions like "William's grandfather" should be a separate entity, not normalized to "William"
+- Possessive constructions like "Jonathan's grandfather" should be a separate entity, not normalized to "Jonathan"
 
 ### Scaling
 
