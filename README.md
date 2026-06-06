@@ -197,8 +197,6 @@ python3 phase4_ingest.py --batch-size 5 --delay 2.0
 
 **Pitfall:** The async flag is `"async_": true` in the JSON body, NOT `retain_async=true` as a query parameter.
 
-**Pitfall (fixed in v1.1):** The original Phase 4 script read `source.get('contact', 'unknown')` from a nested key that didn't exist — the contacts were stored at the top level as `source_contact`. This produced "SMS conversation with unknown" for every fact. The fix reads `fact.get('source_contact', '')` correctly. If you ran the original script, use `cleanup_unknown.py` to delete the affected documents before re-ingesting.
-
 ## Installation
 
 ```bash
@@ -255,18 +253,6 @@ The pipeline has been tested on ~50,000 messages producing 206 chunks. Performan
 - Phase 4: ~15 minutes (async API batching, rate-limited at 1 req/sec)
 
 For larger archives (100K+ messages), Phase 2 will scale linearly. Consider running with a faster model or parallel chunk processing.
-
-## Post-Import Cleanup
-
-If you discover a bug after ingestion (e.g., incorrect context strings), you can delete affected documents and re-ingest:
-
-1. **Identify affected documents:** Use `cleanup_unknown.py --dry-run` to list documents that will be deleted.
-
-2. **Delete them:** `python3 cleanup_unknown.py --delete` removes all SMS documents with incomplete context ("SMS conversation with unknown", generic "SMS conversation", or test contexts). It will NOT touch organically-created documents from normal Hindsight usage.
-
-3. **Re-ingest:** After cleanup, re-run Phase 4 with the fixed script: `python3 phase4_ingest.py`
-
-The cleanup script targets documents by their `retain_params.context` field and `sms:` tags, so it's safe to run alongside other Hindsight data.
 
 ## License
 
