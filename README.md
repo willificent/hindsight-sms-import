@@ -1,6 +1,6 @@
 # hindsight-sms-import
 
-Extract high-value facts from SMS message archives into persistent long-term memory using a 4-phase pipeline. Built for [Hindsight](https://github.com/nousresearch/hindsigh](https://github.com/vectorize-io/hindsight) but adaptable to any knowledge graph or vector store.
+Extract high-value facts from SMS message archives into persistent long-term memory using a 4-phase pipeline. Built for [Hindsight](https://github.com/vectorize-io/hindsight) but adaptable to any knowledge graph or vector store.
 
 ## Why?
 
