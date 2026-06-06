@@ -90,7 +90,11 @@ def build_item(fact: dict) -> dict:
     entities = fact.get("entities", [])
     salience = fact.get("salience", 3)
     content = fact.get("content", "")
-    source = fact.get("source", {})
+    # Phase 3 stores contact info at top level: source_contact, source_chunk, source_date_range
+    # Not nested under a "source" key
+    contact_name = fact.get("source_contact", "")
+    chunk_id = fact.get("source_chunk", "")
+    date_range = fact.get("source_date_range", "")
 
     # Build metadata
     metadata = {
@@ -98,15 +102,16 @@ def build_item(fact: dict) -> dict:
         "salience": str(salience),
         "source_type": "sms",
     }
-    if source.get("contact"):
-        metadata["contact"] = source["contact"]
-    if source.get("chunk_id"):
-        metadata["chunk_id"] = source["chunk_id"]
+    if contact_name:
+        metadata["contact"] = contact_name
+    if chunk_id:
+        metadata["chunk_id"] = chunk_id
 
     # Build tags: category + contact name for scoped retrieval
     tags = [CATEGORY_TAGS.get(category, f"sms:{category}")]
-    if source.get("contact"):
-        contact_tag = source["contact"].lower().replace(" ", "-")
+    if contact_name:
+        # Normalize to a simple tag format (e.g. "Angela Flynn" -> "angela-flynn")
+        contact_tag = contact_name.lower().replace(" ", "-")
         tags.append(f"contact:{contact_tag}")
 
     # Build entity references
@@ -127,7 +132,7 @@ def build_item(fact: dict) -> dict:
 
     item = {
         "content": content,
-        "context": f"SMS conversation with {source.get('contact', 'unknown')}",
+        "context": f"SMS conversation with {contact_name}" if contact_name else "SMS conversation",
         "metadata": metadata,
         "tags": tags,
         "entities": hindsight_entities,
